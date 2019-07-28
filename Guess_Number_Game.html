@@ -1,0 +1,47 @@
+<!-- 星期五作業2: 麻仔台(用表格放圖、欄位合併，圖片自選;
+            用background亮度跳燈，用頻率(時間控制)控制跳燈速度) 
+            除了用表格，也可用canvas來做
+        https://www.cnblogs.com/xiaohuochai/p/5973556.html  -->
+<!-- 星期五作業2(option): 打磚塊，球和使用者水平移動的打球板都是物件，
+        判斷球上左右的移動邊界，設定一水平線，當球高度低於那水平線，就算輸了
+        用迴圈比對球碰動磚塊，碰到第一個磚塊就break -->
+
+<!-- 看: https://blog.csdn.net/Searchin_R/article/details/82808201
+    https://www.itread01.com/content/1541705785.html
+    https://www.cnblogs.com/xiaohuochai/p/5973556.html
+查: vue.js
+用創用cc的圖，沒有版權問題 https://search.creativecommons.org/ 
+https://www.easyicon.net/
+http://creativecommons.tw/search-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>猜數字遊戲</title>
+</head>
+<body>
+    <h1>Guess Number Game</h1>
+    <hr>
+    <input type="number" id="input" onchange="checkGuess()" />
+    <input type="button" value="Guess" id="Guess" onclick="doGuess()" />
+    <input type="button" value="replay" onclick="replay()" />
+
+    <select id="guslength" onchange="changeLength()">
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <hr>
+
+    <!-- 記錄猜過的數字 -->
+    <div id="log"></div>    
+
+    <script src="Guess_Number_Game.js"></script>
+</body>
+</html>
+
+
+

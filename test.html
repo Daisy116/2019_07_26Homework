@@ -1,0 +1,76 @@
+<canvas id="canvas" width="1024" height="768"
+    style="border: 1px solid black"></canvas>
+<script>
+let ctx = canvas.getContext('2d');  //2d為渲染
+
+let bg = new Image();     
+let brick = new Image();
+let ball = new Image();
+bg.src = 'bg2.jpg'; 
+brick.src = 'brick.png';
+ball.src = 'ball.png';
+
+let ballx = 450;
+let bally = 350;
+let dx = 8, dy = 8;
+//控制板子的位置
+let boardx = 0;
+let boardy = 680;
+
+canvas.onmousemove = function(e){
+        boardx = e.offsetX-35;  //板子隨著滑鼠移動    
+        // istouch = isTouch();  
+        // console.log(istouch);  
+    }
+
+function refreshView(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(bg, 0, 0);  //要有背景
+    ctx.drawImage(brick, boardx, 680);
+    ctx.drawImage(ball, ballx, bally);
+    
+}
+setInterval(refreshView, 20);
+
+function moveBall(){  //決定球移動的距離
+    if(ballx < 0 || ballx + 36 > canvas.width){    //如果碰到左右兩邊的牆壁
+        dx *= -1;
+    }
+    if(bally < 0 || bally + 54 >= 685){   //如果碰到上下兩邊的牆壁
+        if(isTouch() > 0){
+            dy *= -1;
+        }else{
+            dy *= 1;
+        }
+        
+    }
+    ballx += dx;   //ballx在圖片的左上角
+    bally += dy;   //bally也在圖片的左上角
+}
+setInterval(moveBall, 20);
+
+
+
+
+
+
+var _ball = {x: 5, y: 5, width: 50, height: 50}
+var _brick = {x: 20, y: 10, width: 10, height: 10}
+
+if (_ball.x < _brick.x + _brick.width &&
+    _ball.x + _ball.width > _brick.x &&
+    _ball.y < _brick.y + _brick.height &&
+    _ball.height + _ball.y > _brick.y) {
+       console.log("有碰撞")
+    // collision detected!
+}
+
+// filling in the values =>
+
+if (5 < 30 &&
+    55 > 20 &&
+    5 < 20 &&
+    55 > 10) {
+    // collision detected!
+}
+</script>
