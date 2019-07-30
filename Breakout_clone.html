@@ -1,7 +1,7 @@
 <!-- 打磚塊遊戲 -->
 <h1 id="head"></h1>
 <hr>
-<canvas id="canvas" width="1024" height="768"
+<canvas id="canvas" width="500" height="600"
     style="border: 1px solid black"></canvas>
 <script>
 let ctx = canvas.getContext('2d');  //2d為渲染
@@ -15,54 +15,58 @@ brick.src = 'brick.png';
 ball.src = 'ball.png';
 wall.src = 'wall2.png';
 
-let ballobj = {x: 450, y: 350, width: 36, height: 54, dx : 8, dy : 8}
-let brickobj = {x: 500, y: 680, width: 72, height: 72}
-let wallobj = {x: 500, y: 0, width: 128, height: 128}
+let ballobj = {x: 250, y: 300, width: 36, height: 54, dx : 8, dy : 8}
+let brickobj = {x: 200, y: 500, width: 72, height: 72}
+let wallobj = {x: 200, y: 0, width: 128, height: 128}
+let disapear = false;
 
 canvas.onmousemove = function(e){
     brickobj.x = e.offsetX-35;  //板子隨著滑鼠移動     
 }
 
+function end(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
 function refreshView(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.drawImage(bg, 0, 0);  //要有背景
-    ctx.drawImage(brick, brickobj.x, 680);
-    ctx.drawImage(ball, ballobj.x, ballobj.y);
-    ctx.drawImage(wall, wallobj.x, wallobj.y);
+    ctx.drawImage(bg, 0, 0);  //要有背景   
+    ctx.drawImage(ball, ballobj.x, ballobj.y);    
+    ctx.drawImage(brick, brickobj.x, brickobj.y);
+    if(!disapear){
+        ctx.drawImage(wall, wallobj.x, wallobj.y);
+    }else{
+        wallobj.x = -500;
+        alert("You win!");
+    }
     // console.log(`${ballobj.x}        ${ballobj.y}`);   
 }
-setInterval(refreshView, 30);
+if(!disapear){
+    setInterval(refreshView, 30); 
+}else{
+    setInterval(end, 30); 
+}
+
 
 function moveBall(){  //決定球移動的距離
-    if(ballobj.x < 0 || ballobj.x + 36 > canvas.width){    //如果碰到左右兩邊的牆壁
+    if(ballobj.x < 0 || ballobj.x + ballobj.width > canvas.width || isTouch2() > 0){    //如果碰到左右兩邊的牆壁
         ballobj.dx *= -1;
     }
-    if(ballobj.y < 0 || ballobj.y + 54 >= 685){   //如果碰到上下兩邊的牆壁
-        if(isTouch() > 0 || ballobj.y < 0){       //上面的邊界設的怪怪的   
+    if(ballobj.y < 0 || ballobj.y + ballobj.height >= brickobj.y){   //如果碰到上下兩邊的牆壁
+        if(isTouch() > 0 || ballobj.y < 0 || isTouch2() > 0){       //上面的邊界設的怪怪的   
             ballobj.dy *= -1;
-            console.log(ballobj.y);
         }else{
             ballobj.dy *= 1;
         }       
     }
+    if(ballobj.y > canvas.height){
+        console.log(ballobj.y);
+        alert("GAME OVER");
+        ballobj.y = -100;
+    }
     ballobj.x += ballobj.dx;   
     ballobj.y += ballobj.dy;   
 }
-// function moveBall(){  //決定球移動的距離
-//     if(ballobj.x < 0 || ballobj.x + 36 > canvas.width){    //如果碰到左右兩邊的牆壁
-//         ballobj.dx *= -1;
-//     }
-//     if(ballobj.y < 0 || ballobj.y + 54 >= 685){   //如果碰到上下兩邊的牆壁
-//         if(isTouch() > 0 || ballobj.y < 0){       //上面的邊界設的怪怪的   
-//             ballobj.dy *= -1;
-//             console.log(ballobj.y);
-//         }else{
-//             ballobj.dy *= 1;
-//         }       
-//     }
-//     ballobj.x += ballobj.dx;   
-//     ballobj.y += ballobj.dy;   
-// }
 setInterval(moveBall, 30);
 
 function isTouch(){   // 針對球和板子的collision detected!
@@ -70,10 +74,10 @@ function isTouch(){   // 針對球和板子的collision detected!
         ballobj.x + ballobj.width > brickobj.x &&
         ballobj.y < brickobj.y + brickobj.height &&
         ballobj.height + ballobj.y > brickobj.y) {
-        console.log("有碰撞");
+        // console.log("有碰撞");
         return 1;
     }else{
-        console.log("沒碰撞");
+        // console.log("沒碰撞");
         return 0;
     }
 }
@@ -84,15 +88,12 @@ function isTouch2(){   // 針對球和磚塊的collision detected!
         ballobj.y < wallobj.y + wallobj.height &&
         ballobj.height + ballobj.y > wallobj.y) {
         console.log("有碰撞");
+        disapear = true;
         return 1;
     }else{
         console.log("沒碰撞");
+        disapear = false;
         return 0;
     }
 }
-
-
-
-
-
 </script>
