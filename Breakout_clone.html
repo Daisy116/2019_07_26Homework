@@ -1,99 +1,13 @@
 <!-- 打磚塊遊戲 -->
-<h1 id="head"></h1>
+<div style="background-color: lightseagreen">
+    <h1 id="head" style="font-size:40px;font-weight: bolder;font-family:微軟正黑體;color:blue">打磚塊遊戲</h1>
+    <span id="time" style="font-size:28px;font-style: italic;font-family:標楷體;color: yellow;"></span> 
+</div>
+
 <hr>
-<canvas id="canvas" width="500" height="600"
+
+<canvas id="canvas" width="700" height="600"
     style="border: 1px solid black"></canvas>
-<script>
-let ctx = canvas.getContext('2d');  //2d為渲染
-
-let bg = new Image();     
-let brick = new Image();
-let ball = new Image();
-let wall = new Image();
-bg.src = 'bg2.jpg'; 
-brick.src = 'brick.png';
-ball.src = 'ball.png';
-wall.src = 'wall2.png';
-
-let ballobj = {x: 250, y: 300, width: 36, height: 54, dx : 8, dy : 8}
-let brickobj = {x: 200, y: 500, width: 72, height: 72}
-let wallobj = {x: 200, y: 0, width: 128, height: 128}
-let disapear = false;
-
-canvas.onmousemove = function(e){
-    brickobj.x = e.offsetX-35;  //板子隨著滑鼠移動     
-}
-
-function end(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-}
-
-function refreshView(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.drawImage(bg, 0, 0);  //要有背景   
-    ctx.drawImage(ball, ballobj.x, ballobj.y);    
-    ctx.drawImage(brick, brickobj.x, brickobj.y);
-    if(!disapear){
-        ctx.drawImage(wall, wallobj.x, wallobj.y);
-    }else{
-        wallobj.x = -500;
-        alert("You win!");
-    }
-    // console.log(`${ballobj.x}        ${ballobj.y}`);   
-}
-if(!disapear){
-    setInterval(refreshView, 30); 
-}else{
-    setInterval(end, 30); 
-}
 
 
-function moveBall(){  //決定球移動的距離
-    if(ballobj.x < 0 || ballobj.x + ballobj.width > canvas.width || isTouch2() > 0){    //如果碰到左右兩邊的牆壁
-        ballobj.dx *= -1;
-    }
-    if(ballobj.y < 0 || ballobj.y + ballobj.height >= brickobj.y){   //如果碰到上下兩邊的牆壁
-        if(isTouch() > 0 || ballobj.y < 0 || isTouch2() > 0){       //上面的邊界設的怪怪的   
-            ballobj.dy *= -1;
-        }else{
-            ballobj.dy *= 1;
-        }       
-    }
-    if(ballobj.y > canvas.height){
-        console.log(ballobj.y);
-        alert("GAME OVER");
-        ballobj.y = -100;
-    }
-    ballobj.x += ballobj.dx;   
-    ballobj.y += ballobj.dy;   
-}
-setInterval(moveBall, 30);
-
-function isTouch(){   // 針對球和板子的collision detected!
-    if (ballobj.x < brickobj.x + brickobj.width &&
-        ballobj.x + ballobj.width > brickobj.x &&
-        ballobj.y < brickobj.y + brickobj.height &&
-        ballobj.height + ballobj.y > brickobj.y) {
-        // console.log("有碰撞");
-        return 1;
-    }else{
-        // console.log("沒碰撞");
-        return 0;
-    }
-}
-
-function isTouch2(){   // 針對球和磚塊的collision detected!
-    if (ballobj.x < wallobj.x + wallobj.width &&
-        ballobj.x + ballobj.width > wallobj.x &&
-        ballobj.y < wallobj.y + wallobj.height &&
-        ballobj.height + ballobj.y > wallobj.y) {
-        console.log("有碰撞");
-        disapear = true;
-        return 1;
-    }else{
-        console.log("沒碰撞");
-        disapear = false;
-        return 0;
-    }
-}
-</script>
+<script src="Breakout_clone.js"></script>

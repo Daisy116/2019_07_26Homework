@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小瑪莉</title>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas" width="1050" height="1050" style="border: 1px solid red">
+            您的瀏覽器不支持canvas,請升級瀏覽器
+        </canvas>
+    </div>
+    <script>
+        let ctx = canvas.getContext('2d');
+        (function(){         
+            //定義每一格的寬高
+            let rectH = 150;
+            let rectW = 150;
+
+            //繪製橫線
+            for(let i=0; i < canvas.height/rectH; i++){
+                ctx.moveTo(0,i*rectH);
+                ctx.lineTo(canvas.width,i*rectH);
+            }
+            //繪製直線
+            for(let j=0; j < canvas.width/rectW; j++){
+                ctx.moveTo(j*rectW,0);
+                ctx.lineTo(j*rectW,canvas.height);
+            }
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#555';
+            ctx.stroke();
+        })();
+
+        let bg = new Image();      //bg為背景
+        let orange = new Image();
+        let lemon = new Image();
+        let apple = new Image();
+        let melon = new Image();
+        let bell = new Image();
+        let star = new Image();
+        let seven = new Image();
+        bg.src = 'mario.jpg'; 
+        orange.src = 'orange.png';
+        lemon.src = 'lemon.png';
+        apple.src = 'apple.png';
+        melon.src = 'watermelon.png';
+        bell.src = 'bell.png';
+        star.src = 'star.png';
+        seven.src = '77.png';
+        function refreshView(){
+            ctx.drawImage(bg, 150, 150);
+            ctx.drawImage(orange, 0, 0);
+            ctx.drawImage(orange, 900, 900);
+            ctx.drawImage(lemon, 0, 900);
+            ctx.drawImage(lemon, 900, 0);
+            ctx.drawImage(apple, 0, 300);
+            ctx.drawImage(apple, 600, 0);
+            ctx.drawImage(apple, 300, 900);
+            ctx.drawImage(melon, 900, 150);
+            ctx.drawImage(bell, 150, 0);
+            ctx.drawImage(bell, 750, 900);
+            ctx.drawImage(seven, 450, 900);
+            bell.onload=function(){
+                ctx.drawImage(bell,0,0,bell.width,bell.height,0,150,canvas.width,canvas.height);
+                console.log("??");
+            }
+        }
+        setInterval(refreshView, 30);
+        
+    </script>
+
+
+
+
+
+
+
+<p style="font-size: 0.9rem;font-style: italic;"><a href="https://www.flickr.com/photos/85217387@N04/9608788077">"Imagen2"</a><span>by <a href="https://www.flickr.com/photos/85217387@N04">Themeplus</a></span> is licensed under <a href="https://creativecommons.org/licenses/by-sa/2.0/?ref=ccsearch&atype=html" style="margin-right: 5px;">CC BY-SA 2.0</a><a href="https://creativecommons.org/licenses/by-sa/2.0/?ref=ccsearch&atype=html" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;opacity: .7;margin-top: 2px;margin-left: 3px;height: 22px !important;"><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc_icon.svg" /><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-by_icon.svg" /><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-sa_icon.svg" /></a></p>
+</body>
+</html>
